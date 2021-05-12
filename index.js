@@ -1,11 +1,9 @@
 function applyCode(string, codes) {
-    var len = codes.length;
-    var elem = document.createElement('span');
-    for (var i = 0; i < len; i++) {
-        elem.style.cssText += MinecraftColorCodes.styleMap[codes[i]] + ';';
-    }
-    elem.innerHTML = string;
-    return elem;
+    let e = document.createElement('span');
+    for (let c of codes)
+        e.style.cssText += MinecraftColorCodes.styleMap[c] + ';';
+    e.innerHTML = string;
+    return e;
 }
 function parseStyle(string) {
     var codes = string.match(/§.{1}/g) || [],
