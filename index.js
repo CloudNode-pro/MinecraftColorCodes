@@ -6,6 +6,7 @@ function parseStyle(string) {
         indexDelta,
         noCode,
         final = document.createDocumentFragment(),
+        len = codes.length,
         string = string.replace(/\n|\\n/g, '<br>');
     
     for (let code of codes) {
@@ -15,7 +16,7 @@ function parseStyle(string) {
     if (indexes[0] !== 0) {
         final.appendChild(MinecraftColorCodes.applyCode( string.substring(0, indexes[0]), [] ) );
     }
-    for (var i = 0; i < len; i++) {
+    for (let i = 0; i < codes.length; ++i) {
     	indexDelta = indexes[i + 1] - indexes[i];
         if(indexDelta === 2) {
             while(indexDelta === 2) {
