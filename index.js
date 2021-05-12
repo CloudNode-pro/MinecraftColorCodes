@@ -1,22 +1,21 @@
-
 var obfuscators = [];
 var styleMap = {
-    '§4': 'font-weight:normal;text-decoration:none;color:#be0000',
-    '§c': 'font-weight:normal;text-decoration:none;color:#fe3f3f',
-    '§6': 'font-weight:normal;text-decoration:none;color:#d9a334',
-    '§e': 'font-weight:normal;text-decoration:none;color:#fefe3f',
-    '§2': 'font-weight:normal;text-decoration:none;color:#00be00',
-    '§a': 'font-weight:normal;text-decoration:none;color:#3ffe3f',
-    '§b': 'font-weight:normal;text-decoration:none;color:#3ffefe',
-    '§3': 'font-weight:normal;text-decoration:none;color:#00bebe',
-    '§1': 'font-weight:normal;text-decoration:none;color:#0000be',
-    '§9': 'font-weight:normal;text-decoration:none;color:#3f3ffe',
-    '§d': 'font-weight:normal;text-decoration:none;color:#fe3ffe',
-    '§5': 'font-weight:normal;text-decoration:none;color:#be00be',
+    '§4': 'font-weight:normal;text-decoration:none;color:#ec0505',
+    '§c': 'font-weight:normal;text-decoration:none;color:#ff495a',
+    '§6': 'font-weight:normal;text-decoration:none;color:#ff9800',
+    '§e': 'font-weight:normal;text-decoration:none;color:#ffeb3b',
+    '§2': 'font-weight:normal;text-decoration:none;color:#4caf50',
+    '§a': 'font-weight:normal;text-decoration:none;color:#50ff57',
+    '§b': 'font-weight:normal;text-decoration:none;color:#0dcaf0',
+    '§3': 'font-weight:normal;text-decoration:none;color:#20c997',
+    '§1': 'font-weight:normal;text-decoration:none;color:#0d6efd',
+    '§9': 'font-weight:normal;text-decoration:none;color:#7070e6',
+    '§d': 'font-weight:normal;text-decoration:none;color:#e8559e',
+    '§5': 'font-weight:normal;text-decoration:none;color:#7c10f2',
     '§f': 'font-weight:normal;text-decoration:none;color:#ffffff',
-    '§7': 'font-weight:normal;text-decoration:none;color:#bebebe',
-    '§8': 'font-weight:normal;text-decoration:none;color:#3f3f3f',
-    '§0': 'font-weight:normal;text-decoration:none;color:#000000',
+    '§7': 'font-weight:normal;text-decoration:none;color:#bfbfbf',
+    '§8': 'font-weight:normal;text-decoration:none;color:#6c757d',
+    '§0': 'font-weight:normal;text-decoration:none;color:#343a40',
     '§l': 'font-weight:bold',
     '§n': 'text-decoration:underline;text-decoration-skip:spaces',
     '§o': 'font-style:italic',
@@ -121,10 +120,7 @@ function clearObfuscators() {
 String.prototype.replaceColorCodes = function() {
   clearObfuscators();
   var outputString = parseStyle(String(this));
-  return outputString;
+  let d = document.createElement("div");
+  d.appendChild(outputString);
+  return d.innerHTML;
 };
-
-/////////////////////////////////////////////////
-function cutString(str, cutStart, cutEnd){
-  return str.substr(0,cutStart) + str.substr(cutEnd+1);
-}
