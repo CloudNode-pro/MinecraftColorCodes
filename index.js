@@ -6,12 +6,11 @@ function parseStyle(string) {
         indexDelta,
         noCode,
         final = document.createDocumentFragment(),
-        len = codes.length,
         string = string.replace(/\n|\\n/g, '<br>');
     
-    for (var i = 0; i < len; i++) {
-        indexes.push( string.indexOf(codes[i]) );
-        string = string.replace(codes[i], '\x00\x00');
+    for (let code of codes) {
+        indexes.push( string.indexOf(code) );
+        string = string.replace(code, '\x00\x00');
     }
     if (indexes[0] !== 0) {
         final.appendChild(MinecraftColorCodes.applyCode( string.substring(0, indexes[0]), [] ) );
