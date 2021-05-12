@@ -21,55 +21,10 @@ var styleMap = {
     '§o': 'font-style:italic',
     '§m': 'text-decoration:line-through;text-decoration-skip:spaces',
 };
-function obfuscate(string, elem) {
-    var magicSpan,
-        currNode,
-        len = elem.childNodes.length;
-    if(string.indexOf('<br>') > -1) {
-        elem.innerHTML = string;
-        for(var j = 0; j < len; j++) {
-            currNode = elem.childNodes[j];
-            if(currNode.nodeType === 3) {
-                magicSpan = document.createElement('span');
-                magicSpan.innerHTML = currNode.nodeValue;
-                elem.replaceChild(magicSpan, currNode);
-                init(magicSpan);
-            }
-        }
-    } else {
-        init(elem, string);
-    }
-    function init(el, str) {
-        var i = 0,
-            obsStr = str || el.innerHTML,
-            len = obsStr.length;
-        obfuscators.push( window.setInterval(function () {
-            if(i >= len) i = 0;
-            obsStr = replaceRand(obsStr, i);
-            el.innerHTML = obsStr;
-            i++;
-        }, 0) );
-    }
-    function randInt(min, max) {
-        return Math.floor( Math.random() * (max - min + 1) ) + min;
-    }
-    function replaceRand(string, i) {
-        var randChar = String.fromCharCode( randInt(64,90) ); /*Numbers: 48-57 Al:64-90*/
-        return string.substr(0, i) + randChar + string.substr(i + 1, string.length);
-    }
-}
 function applyCode(string, codes) {
     var len = codes.length;
-    var elem = document.createElement('span'),
-        obfuscated = false;
-    for(var i = 0; i < len; i++) {
-        elem.style.cssText += styleMap[codes[i]] + ';';
-        if(codes[i] === '§k') {
-            obfuscate(string, elem);
-            obfuscated = true;
-        }
-    }
-    if(!obfuscated) elem.innerHTML = string;
+    var elem = document.createElement('span');
+    for(var i = 0; i < len; i++) elem.style.cssText += styleMap[codes[i]] + ';';
     return elem;
 }
 function parseStyle(string) {
@@ -109,13 +64,6 @@ function parseStyle(string) {
         final.appendChild( applyCode(tmpStr, apply) );
     }
     return final;
-}
-function clearObfuscators() {
-    var i = obfuscators.length;
-    for(;i--;) {
-        clearInterval(obfuscators[i]);
-    }
-    obfuscators = [];
 }
 
 const MinecraftColorCodes = {
