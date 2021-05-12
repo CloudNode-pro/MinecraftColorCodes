@@ -1,30 +1,8 @@
-var styleMap = {
-    '§4': 'font-weight:normal;text-decoration:none;color:#ec0505',
-    '§c': 'font-weight:normal;text-decoration:none;color:#ff495a',
-    '§6': 'font-weight:normal;text-decoration:none;color:#ff9800',
-    '§e': 'font-weight:normal;text-decoration:none;color:#ffeb3b',
-    '§2': 'font-weight:normal;text-decoration:none;color:#4caf50',
-    '§a': 'font-weight:normal;text-decoration:none;color:#50ff57',
-    '§b': 'font-weight:normal;text-decoration:none;color:#0dcaf0',
-    '§3': 'font-weight:normal;text-decoration:none;color:#20c997',
-    '§1': 'font-weight:normal;text-decoration:none;color:#0d6efd',
-    '§9': 'font-weight:normal;text-decoration:none;color:#7070e6',
-    '§d': 'font-weight:normal;text-decoration:none;color:#e8559e',
-    '§5': 'font-weight:normal;text-decoration:none;color:#7c10f2',
-    '§f': 'font-weight:normal;text-decoration:none;color:#ffffff',
-    '§7': 'font-weight:normal;text-decoration:none;color:#bfbfbf',
-    '§8': 'font-weight:normal;text-decoration:none;color:#6c757d',
-    '§0': 'font-weight:normal;text-decoration:none;color:#343a40',
-    '§l': 'font-weight:bold',
-    '§n': 'text-decoration:underline;text-decoration-skip:spaces',
-    '§o': 'font-style:italic',
-    '§m': 'text-decoration:line-through;text-decoration-skip:spaces',
-};
 function applyCode(string, codes) {
     var len = codes.length;
     var elem = document.createElement('span');
     for (var i = 0; i < len; i++) {
-        elem.style.cssText += styleMap[codes[i]] + ';';
+        elem.style.cssText += MinecraftColorCodes.styleMap[codes[i]] + ';';
     }
     elem.innerHTML = string;
     return elem;
@@ -40,14 +18,14 @@ function parseStyle(string) {
         len = codes.length,
         string = string.replace(/\n|\\n/g, '<br>');
     
-    for(var i = 0; i < len; i++) {
+    for (var i = 0; i < len; i++) {
         indexes.push( string.indexOf(codes[i]) );
         string = string.replace(codes[i], '\x00\x00');
     }
-    if(indexes[0] !== 0) {
+    if (indexes[0] !== 0) {
         final.appendChild( applyCode( string.substring(0, indexes[0]), [] ) );
     }
-    for(var i = 0; i < len; i++) {
+    for (var i = 0; i < len; i++) {
     	indexDelta = indexes[i + 1] - indexes[i];
         if(indexDelta === 2) {
             while(indexDelta === 2) {
@@ -73,5 +51,27 @@ const MinecraftColorCodes = {
 		let d = document.createElement("div");
 		d.appendChild(parseStyle(text));
 		return d.innerHTML;
+	},
+	styleMap: {
+	    '§4': 'font-weight:normal;text-decoration:none;color:#ec0505',
+	    '§c': 'font-weight:normal;text-decoration:none;color:#ff495a',
+	    '§6': 'font-weight:normal;text-decoration:none;color:#ff9800',
+	    '§e': 'font-weight:normal;text-decoration:none;color:#ffeb3b',
+	    '§2': 'font-weight:normal;text-decoration:none;color:#4caf50',
+	    '§a': 'font-weight:normal;text-decoration:none;color:#50ff57',
+	    '§b': 'font-weight:normal;text-decoration:none;color:#0dcaf0',
+	    '§3': 'font-weight:normal;text-decoration:none;color:#20c997',
+	    '§1': 'font-weight:normal;text-decoration:none;color:#0d6efd',
+	    '§9': 'font-weight:normal;text-decoration:none;color:#7070e6',
+	    '§d': 'font-weight:normal;text-decoration:none;color:#e8559e',
+	    '§5': 'font-weight:normal;text-decoration:none;color:#7c10f2',
+	    '§f': 'font-weight:normal;text-decoration:none;color:#ffffff',
+	    '§7': 'font-weight:normal;text-decoration:none;color:#bfbfbf',
+	    '§8': 'font-weight:normal;text-decoration:none;color:#6c757d',
+	    '§0': 'font-weight:normal;text-decoration:none;color:#343a40',
+	    '§l': 'font-weight:bold',
+	    '§n': 'text-decoration:underline;text-decoration-skip:spaces',
+	    '§o': 'font-style:italic',
+	    '§m': 'text-decoration:line-through;text-decoration-skip:spaces',
 	}
 }
