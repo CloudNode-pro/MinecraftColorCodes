@@ -1,4 +1,3 @@
-var obfuscators = [];
 var styleMap = {
     '§4': 'font-weight:normal;text-decoration:none;color:#ec0505',
     '§c': 'font-weight:normal;text-decoration:none;color:#ff495a',
@@ -24,7 +23,10 @@ var styleMap = {
 function applyCode(string, codes) {
     var len = codes.length;
     var elem = document.createElement('span');
-    for(var i = 0; i < len; i++) elem.style.cssText += styleMap[codes[i]] + ';';
+    for (var i = 0; i < len; i++) {
+        elem.style.cssText += styleMap[codes[i]] + ';';
+    }
+    elem.innerHTML = string;
     return elem;
 }
 function parseStyle(string) {
