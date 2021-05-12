@@ -117,10 +117,11 @@ function clearObfuscators() {
     }
     obfuscators = [];
 }
-String.prototype.replaceColorCodes = function() {
-  clearObfuscators();
-  var outputString = parseStyle(String(this));
-  let d = document.createElement("div");
-  d.appendChild(outputString);
-  return d.innerHTML;
-};
+
+const MinecraftColorCodes = {
+	toHTML: function (text) {
+		let d = document.createElement("div");
+		d.appendChild(parseStyle(text));
+		return d.innerHTML;
+	}
+}
