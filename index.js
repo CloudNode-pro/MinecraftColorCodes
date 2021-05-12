@@ -1,6 +1,6 @@
 function parseStyle(string) {
     var codes = string.match(/§.{1}/g) || [],
-        indexes = [],
+        indices = [],
         apply = [],
         tmpStr,
         indexDelta,
@@ -10,19 +10,19 @@ function parseStyle(string) {
         string = string.replace(/\n|\\n/g, '<br>');
     
     for (let code of codes) {
-        indexes.push( string.indexOf(code) );
+        indices.push( string.indexOf(code) );
         string = string.replace(code, '\x00\x00');
     }
-    if (indexes[0] !== 0) {
-        final.appendChild(MinecraftColorCodes.applyCode( string.substring(0, indexes[0]), [] ) );
+    if (indices[0] !== 0) {
+        final.appendChild(MinecraftColorCodes.applyCode( string.substring(0, indices[0]), [] ) );
     }
     for (let i = 0; i < codes.length; ++i) {
-    	indexDelta = indexes[i + 1] - indexes[i];
+    	indexDelta = indices[i + 1] - indices[i];
         if(indexDelta === 2) {
             while(indexDelta === 2) {
                 apply.push ( codes[i] );
                 i++;
-                indexDelta = indexes[i + 1] - indexes[i];
+                indexDelta = indices[i + 1] - indices[i];
             }
             apply.push ( codes[i] );
         } else {
@@ -31,7 +31,7 @@ function parseStyle(string) {
         if( apply.lastIndexOf('§r') > -1) {
             apply = apply.slice( apply.lastIndexOf('§r') + 1 );
         }
-        tmpStr = string.substring( indexes[i], indexes[i + 1] );
+        tmpStr = string.substring( indices[i], indices[i + 1] );
         final.appendChild(MinecraftColorCodes.applyCode(tmpStr, apply) );
     }
     return final;
