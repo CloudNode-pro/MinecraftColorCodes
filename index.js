@@ -1,10 +1,3 @@
-function applyCode(string, codes) {
-    let e = document.createElement('span');
-    for (let c of codes)
-        e.style.cssText += MinecraftColorCodes.styleMap[c] + ';';
-    e.innerHTML = string;
-    return e;
-}
 function parseStyle(string) {
     var codes = string.match(/§.{1}/g) || [],
         indexes = [],
@@ -21,7 +14,7 @@ function parseStyle(string) {
         string = string.replace(codes[i], '\x00\x00');
     }
     if (indexes[0] !== 0) {
-        final.appendChild( applyCode( string.substring(0, indexes[0]), [] ) );
+        final.appendChild(MinecraftColorCodes.applyCode( string.substring(0, indexes[0]), [] ) );
     }
     for (var i = 0; i < len; i++) {
     	indexDelta = indexes[i + 1] - indexes[i];
@@ -39,7 +32,7 @@ function parseStyle(string) {
             apply = apply.slice( apply.lastIndexOf('§r') + 1 );
         }
         tmpStr = string.substring( indexes[i], indexes[i + 1] );
-        final.appendChild( applyCode(tmpStr, apply) );
+        final.appendChild(MinecraftColorCodes.applyCode(tmpStr, apply) );
     }
     return final;
 }
@@ -71,5 +64,12 @@ const MinecraftColorCodes = {
 	    '§n': 'text-decoration:underline;text-decoration-skip:spaces',
 	    '§o': 'font-style:italic',
 	    '§m': 'text-decoration:line-through;text-decoration-skip:spaces',
+	},
+	applyCode: function (string, codes) {
+	    let e = document.createElement('span');
+	    for (let c of codes)
+	        e.style.cssText += MinecraftColorCodes.styleMap[c] + ';';
+	    e.innerHTML = string;
+	    return e;
 	}
 }
