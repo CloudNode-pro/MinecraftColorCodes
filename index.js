@@ -40,7 +40,7 @@ const MinecraftColorCodes = {
         if (r[0] !== 0) a.appendChild(MinecraftColorCodes.applyCode(s.substring(0, r[0]), []));
         for (let c = 0; c < n.length; ++c) {
             if (2 === (t = r[c + 1] - r[c])) {
-                for (; 2 === t;) l.push(n[c]), t = r[++c + 1] - r[c];
+                while(2 === t) l.push(n[c]), t = r[++c + 1] - r[c];
                 l.push(n[c])
             }
             else l.push(n[c]);
