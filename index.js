@@ -1,53 +1,162 @@
-const MinecraftColorCodes = {
-    toHTML: function(s) {
-        let d = document.createElement("div");
-        return d.appendChild(MinecraftColorCodes.parseStyle(s)), d.innerHTML;
-    },
-    styleMap: {
-        "§4": "font-weight:normal;text-decoration:none;color:#ec0505",
-        "§c": "font-weight:normal;text-decoration:none;color:#ff495a",
-        "§6": "font-weight:normal;text-decoration:none;color:#ff9800",
-        "§e": "font-weight:normal;text-decoration:none;color:#ffeb3b",
-        "§2": "font-weight:normal;text-decoration:none;color:#4caf50",
-        "§a": "font-weight:normal;text-decoration:none;color:#50ff57",
-        "§b": "font-weight:normal;text-decoration:none;color:#0dcaf0",
-        "§3": "font-weight:normal;text-decoration:none;color:#20c997",
-        "§1": "font-weight:normal;text-decoration:none;color:#0d6efd",
-        "§9": "font-weight:normal;text-decoration:none;color:#7070e6",
-        "§d": "font-weight:normal;text-decoration:none;color:#e8559e",
-        "§5": "font-weight:normal;text-decoration:none;color:#7c10f2",
-        "§f": "font-weight:normal;text-decoration:none;color:#ffffff",
-        "§7": "font-weight:normal;text-decoration:none;color:#bfbfbf",
-        "§8": "font-weight:normal;text-decoration:none;color:#6c757d",
-        "§0": "font-weight:normal;text-decoration:none;color:#343a40",
-        "§l": "font-weight:bold",
-        "§n": "text-decoration:underline;text-decoration-skip:spaces",
-        "§o": "font-style:italic",
-        "§m": "text-decoration:line-through;text-decoration-skip:spaces"
-    },
-    applyCode: function(s, c) {
-        let t = document.createElement("span");
-        for (let s of c) t.style.cssText += MinecraftColorCodes.styleMap[s] + ";";
-        return t.innerHTML = s, t;
-    },
-    parseStyle: function(s) {
-        let e, t, n = s.match(/§.{1}/g) || [],
-            r = [],
-            l = [],
-            a = document.createDocumentFragment();
-        s = s.replace(/\n|\\n/g, "<br>");
-        for (let e of n) r.push(s.indexOf(e)), s = s.replace(e, "\0\0");
-        if (r[0] !== 0) a.appendChild(MinecraftColorCodes.applyCode(s.substring(0, r[0]), []));
-        for (let c = 0; c < n.length; ++c) {
-            if (2 === (t = r[c + 1] - r[c])) {
-                while(2 === t) l.push(n[c]), t = r[++c + 1] - r[c];
-                l.push(n[c])
-            }
-            else l.push(n[c]);
-            l.includes("§r") && (l = l.slice(l.lastIndexOf("§r") + 1));
-            e = s.substring(r[c], r[c + 1]);
-            a.appendChild(MinecraftColorCodes.applyCode(e, l));
-        }
-        return a
-    }
+function MinecraftColorCodes() {
+  this.parse = function(e) {
+    e = "&r" + e;
+    const r = [],
+      o = [],
+      t = /&[0-9a-fklmnor]/g;
+    for (; null != (match = t.exec(e));) r.push({
+      color: match[0],
+      index: match.index
+    });
+    return r.forEach((t, a) => {
+      const c = r[a].color,
+        l = r[a].index,
+        s = r[a + 1] && r[a + 1].index ? r[a + 1].index : e.length,
+        x = e.substring(l + 2, s);
+      switch (c) {
+        case "&0":
+          k = {
+            color: "black",
+            text: x
+          };
+          break;
+        case "&1":
+          k = {
+            color: "dark_blue",
+            text: x
+          };
+          break;
+        case "&2":
+          k = {
+            color: "dark_green",
+            text: x
+          };
+          break;
+        case "&3":
+          k = {
+            color: "dark_aqua",
+            text: x
+          };
+          break;
+        case "&4":
+          k = {
+            color: "dark_red",
+            text: x
+          };
+          break;
+        case "&5":
+          k = {
+            color: "dark_purple",
+            text: x
+          };
+          break;
+        case "&6":
+          k = {
+            color: "gold",
+            text: x
+          };
+          break;
+        case "&7":
+          k = {
+            color: "gray",
+            text: x
+          };
+          break;
+        case "&8":
+          k = {
+            color: "dark_gray",
+            text: x
+          };
+          break;
+        case "&9":
+          k = {
+            color: "blue",
+            text: x
+          };
+          break;
+        case "&a":
+          k = {
+            color: "green",
+            text: x
+          };
+          break;
+        case "&b":
+          k = {
+            color: "aqua",
+            text: x
+          };
+          break;
+        case "&c":
+          k = {
+            color: "red",
+            text: x
+          };
+          break;
+        case "&d":
+          k = {
+            color: "light_purple",
+            text: x
+          };
+          break;
+        case "&e":
+          k = {
+            color: "yellow",
+            text: x
+          };
+          break;
+        case "&f":
+          k = {
+            color: "white",
+            text: x
+          };
+          break;
+        case "&k":
+          k = {
+            color: o[a - 1]?.color ?? "white",
+            mode: "obfuscated",
+            text: x
+          };
+          break;
+        case "&l":
+          k = {
+            color: o[a - 1]?.color ?? "white",
+            mode: "bold",
+            text: x
+          };
+          break;
+        case "&m":
+          k = {
+            color: o[a - 1]?.color ?? "white",
+            mode: "strikethrough",
+            text: x
+          };
+          break;
+        case "&n":
+          k = {
+            color: o[a - 1]?.color ?? "white",
+            mode: "underline",
+            text: x
+          };
+          break;
+        case "&o":
+          k = {
+            color: o[a - 1]?.color ?? "white",
+            mode: "italic",
+            text: x
+          };
+          break;
+        case "&r":
+          k = {
+            color: "white",
+            mode: "reset",
+            text: x
+          }
+      }
+      o.push(k)
+    }), o.filter(e => "" !== e.text)
+  },
+  styleMap: {
+    colors: {},
+    modes: {}   
+  }
 };
